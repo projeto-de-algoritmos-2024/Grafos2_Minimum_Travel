@@ -2,7 +2,58 @@ import pygame
 from config import *
 from sprites import *
 import sys
+import random
+from collections import defaultdict
 
+class MazeGenerator:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.maze = [['B' for _ in range(width)] for _ in range(height)]
+
+    def generate_maze(self):
+        # Inicializa as células do labirinto
+        for y in range(1, self.height - 1, 2):
+            for x in range(1, self.width - 1, 2):
+                self.maze[y][x] = '.'
+
+        # Algoritmo de Prim
+        walls = []
+        start_y, start_x = 1, 1
+        self.maze[start_y][start_x] = '.'
+        self.add_walls(start_y, start_x, walls)
+
+        while walls:
+            wall = random.choice(walls)
+            y, x = wall
+
+            if x % 2 == 0:  # Parede vertical
+                if self.maze[y][x-1] == '.' and self.maze[y][x+1] == 'B':
+                    self.maze[y][x] = '.'
+                    self.maze[y][x+1] = '.'
+                    self.add_walls(y, x+1, walls)
+                elif self.maze[y][x+1] == '.' and self.maze[y][x-1] == 'B':
+                    self.maze[y][x] = '.'
+                    self.maze[y][x-1] = '.'
+                    self.add_walls(y, x-1, walls)
+            else:  # Parede horizontal
+                if self.maze[y-1][x] == '.' and self.maze[y+1][x] == 'B':
+                    self.maze[y][x] = '.'
+                    self.maze[y+1][x] = '.'
+                    self.add_walls(y+1, x, walls)
+                elif self.maze[y+1][x] == '.' and self.maze[y-1][x] == 'B':
+                    self.maze[y][x] = '.'
+                    self.maze[y-1][x] = '.'
+                    self.add_walls(y-1, x, walls)
+
+            walls.remove(wall)
+
+        # Adiciona jogador, inimigo e notas
+        self.maze[1][1] = 'P'
+        self.maze[self.height-2][self.width-2] = 'E'
+        self.add_notes()
+
+        return self.maze
 class Game:
     def __init__(self):
         pygame.init()
