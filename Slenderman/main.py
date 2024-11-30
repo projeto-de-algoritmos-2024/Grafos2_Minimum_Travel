@@ -68,7 +68,28 @@ class MazeGenerator:
             if self.maze[y][x] == '.':
                 self.maze[y][x] = 'N'
                 notes_count += 1
-class Game:  
+class Game:
+
+    def analyze_level(self):
+        graph = self.create_graph_from_tilemap()
+        scc = self.kosaraju_scc(graph)
+    
+        if len(scc) > 1:
+            print(f"O nível tem {len(scc)} áreas isoladas.")
+        else:
+            print("O nível é totalmente conectado.")
+
+    def create_graph_from_tilemap(self):
+        graph = defaultdict(list)
+        for y, row in enumerate(tilemap):
+            for x, cell in enumerate(row):
+                if cell != 'B':
+                    for dy, dx in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                        new_y, new_x = y + dy, x + dx
+                        if 0 <= new_y < len(tilemap) and 0 <= new_x < len(tilemap[0]) and tilemap[new_y][new_x] != 'B':
+                            graph[(y, x)].append((new_y, new_x))
+        return graph
+        
     def __init__(self):
         pygame.init()
         pygame.mixer.init()
