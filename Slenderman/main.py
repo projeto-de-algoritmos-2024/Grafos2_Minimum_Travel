@@ -89,6 +89,47 @@ class Game:
                         if 0 <= new_y < len(tilemap) and 0 <= new_x < len(tilemap[0]) and tilemap[new_y][new_x] != 'B':
                             graph[(y, x)].append((new_y, new_x))
         return graph
+
+    def kosaraju_scc(self, graph):
+        def dfs(v, visited, stack):
+            visited.add(v)
+            for neighbor in graph[v]:
+                if neighbor not in visited:
+                    dfs(neighbor, visited, stack)
+            stack.append(v)
+
+        def transpose_graph(graph):
+            transposed = defaultdict(list)
+            for node in graph:
+                for neighbor in graph[node]:
+                    transposed[neighbor].append(node)
+            return transposed
+
+        def dfs_scc(v, visited, component):
+            visited.add(v)
+            component.append(v)
+            for neighbor in transposed_graph[v]:
+                if neighbor not in visited:
+                    dfs_scc(neighbor, visited, component)
+
+        stack = []
+        visited = set()
+        for node in graph:
+            if node not in visited:
+                dfs(node, visited, stack)
+
+        transposed_graph = transpose_graph(graph)
+        visited.clear()
+        scc = []
+
+        while stack:
+            node = stack.pop()
+            if node not in visited:
+                component = []
+                dfs_scc(node, visited, component)
+                scc.append(component)
+
+        return scc
         
     def __init__(self):
         pygame.init()
