@@ -3,6 +3,7 @@ from config import *
 import math
 import random
 from collections import deque
+import heapq
 
 class Spritesheet():
     def __init__ (self, file):
@@ -322,6 +323,35 @@ class Enemy (pygame.sprite.Sprite):
                 if self.animation_loop >= 3:
                     self.animation_loop = 1
 
+    def find_path_to_player(self):
+        start = (self.rect.x // TILESIZE, self.rect.y // TILESIZE)
+        goal = (self.game.player.rect.x // TILESIZE, self.game.player.rect.y // TILESIZE)
+        self.path = self.dijkstra(start, goal)
+
+    def dijkstra(self, start, goal):
+        queue = [(0, start, [])]
+        visited = set()
+
+        while queue:
+            (cost, current, path) = heapq.heappop(queue)
+
+            if current not in visited:
+                visited.add(current)
+                path = path + [current]
+
+                if current == goal:
+                    return path[1:]  # Retorna o caminho sem o ponto inicial
+
+                for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                    next_node = (current[0] + dx, current[1] + dy)
+                    if self.is_walkable(*next_node) and next_node not in visited:
+                        heapq.heappush(queue, (cost + 1, next_node, path))
+
+        return []
+
+    def is_walkable(self, x, y):
+        return 0 <= x < len(tilemap[0]) and 0 <= y < len(tilemap) and tilemap[y][x] != 'B'
+    
 class Block(pygame.sprite.Sprite):
     def __init__ (self,game,x,y):
         self.game = game
