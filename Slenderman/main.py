@@ -4,7 +4,6 @@ from sprites import *
 import sys
 import random
 from collections import defaultdict
-
 class MazeGenerator:
     def __init__(self, width, height):
         self.width = width
@@ -54,7 +53,22 @@ class MazeGenerator:
         self.add_notes()
 
         return self.maze
-class Game:
+
+    def add_walls(self, y, x, walls):
+        for dy, dx in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            new_y, new_x = y + dy, x + dx
+            if 0 <= new_y < self.height and 0 <= new_x < self.width:
+                if self.maze[new_y][new_x] == 'B':
+                    walls.append((new_y, new_x))
+
+    def add_notes(self):
+        notes_count = 0
+        while notes_count < 7:
+            y, x = random.randint(1, self.height-2), random.randint(1, self.width-2)
+            if self.maze[y][x] == '.':
+                self.maze[y][x] = 'N'
+                notes_count += 1
+class Game:  
     def __init__(self):
         pygame.init()
         pygame.mixer.init()
