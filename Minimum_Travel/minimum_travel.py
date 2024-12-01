@@ -69,6 +69,37 @@ def selecionar_esquina(icon_button, nome):
     mudar_cor(icon_button)  # Muda a cor do botão
     mensagem_label.config(text=f"Esquinas selecionadas: {len(esquinas_selecionadas)}")  # Atualiza o contador
 
+def prim_arvore_geradora_minima(grafo, nos_selecionados):
+    import heapq
+
+    # Começa com qualquer nó selecionado
+    no_inicial = nos_selecionados[0]
+    visitados = set()
+    heap = []
+    arvore_minima = nx.Graph()
+
+    # Adiciona todas as arestas do nó inicial na heap
+    for vizinho, atributos in grafo[no_inicial].items():
+        heapq.heappush(heap, (atributos['weight'], no_inicial, vizinho))
+
+    visitados.add(no_inicial)
+
+    # Enquanto houver arestas na heap
+    while heap and len(visitados) < len(nos_selecionados):
+        peso, u, v = heapq.heappop(heap)
+
+        if v not in visitados:
+            # Adiciona a aresta à árvore geradora mínima
+            arvore_minima.add_edge(u, v, weight=peso)
+            visitados.add(v)
+
+            # Adiciona as novas arestas do nó recém-visitado à heap
+            for vizinho, atributos in grafo[v].items():
+                if vizinho not in visitados:
+                    heapq.heappush(heap, (atributos['weight'], v, vizinho))
+
+    return arvore_minima
+
 # Criando botões de ícones para cada esquina
 esquinas = {
     "A": (262, 62),  
@@ -218,12 +249,12 @@ def calcular_rota():
                 # Ignora se não houver caminho entre as esquinas
                 mensagem_label.config(text=f"Sem caminho entre {origem} e {destino}")
 
-    # Calcula a árvore geradora mínima do subgrafo
-    arvore_minima = nx.minimum_spanning_tree(subgrafo, weight="weight")
-
+    # Aplica o algoritmo de Prim no subgrafo
+    arvore_minima = nx.minimum_spanning_tree(subgrafo, algorithm="prim", weight="weight")
+    
     # Cria um subgrafo final apenas com os caminhos necessários
     subgrafo_final = nx.Graph()
-    
+
     # Identificar os nós úteis: todos que estão em trajetos entre esquinas selecionadas
     nos_uteis = set()
     for i, origem in enumerate(esquinas_selecionadas):
