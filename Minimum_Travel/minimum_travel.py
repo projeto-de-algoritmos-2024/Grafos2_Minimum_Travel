@@ -152,6 +152,34 @@ esquinas = {
     "Z2": (199, 401),
     "A3": (370, 390),
     "B3": (386, 442),
+
+    #new E3
+    "C3": (281, 303),
+    "D3": (230, 321),
+    "F3": (178, 338),
+    "G3": (146, 348),
+    "H3": (150, 359),
+    "I3": (162, 405),
+    "J3": (179, 454),
+    "K3": (198, 505),
+    "L3": (9, 454),
+    "M3": (21, 505),
+    "N3": (68, 494),
+    "O3": (102, 425),
+    "P3": (1, 411),
+    "Q3": (129, 292),
+    "R3": (111, 241),
+    "S3": (95, 192),
+    "T3": (235, 202),
+    "U3": (217, 151),
+    "V3": (58, 82),
+    "W3": (38, 22),
+    "X3": (92, 73),
+    "Y3": (144, 56),
+    "Z3": (194, 36),
+    "A4": (74, 17),
+    "B4": (115, 475),
+
 }
 
 # Criando um dicionário para armazenar os botões
@@ -192,6 +220,8 @@ def calcular_rota():
     #F
     grafo.add_edge("F", "U", weight=10)
     grafo.add_edge("F", "Z", weight=5)
+    grafo.add_edge("F", "R3", weight=7)
+    grafo.add_edge("F", "T3", weight=5)
 
     #G
     grafo.add_edge("G", "H", weight=5)
@@ -238,25 +268,29 @@ def calcular_rota():
     
     #T
     grafo.add_edge("T", "U", weight=5)
+    grafo.add_edge("T", "U3", weight=6)
 
     #U
     grafo.add_edge("U", "V", weight=5)
+    grafo.add_edge("U", "T3", weight=6)
 
     #V
     grafo.add_edge("V", "Y", weight=5)
     grafo.add_edge("V", "W", weight=5)
 
     #W
-    grafo.add_edge("W", "X", weight=5)
+    grafo.add_edge("W", "C3", weight=5)
     grafo.add_edge("W", "T1", weight=5)
 
     #X
     grafo.add_edge("X", "Y", weight=5)
+    grafo.add_edge("X", "C3", weight=1)
 
     #Y
     grafo.add_edge("Y", "Z", weight=5)
 
     #Z
+    grafo.add_edge("Z", "Q3", weight=7)
 
     #A1
     grafo.add_edge("A1", "C1", weight=5)
@@ -415,12 +449,14 @@ def calcular_rota():
     grafo.add_edge("S2", "Z2", weight=10)
 
     #T2
+    grafo.add_edge("T2", "K3", weight=1)
 
     #U2
     grafo.add_edge("U2", "V2", weight=4)
 
     #V2
     grafo.add_edge("V2", "W2", weight=5)
+    grafo.add_edge("V2", "C3", weight=5)
 
     #W2
     grafo.add_edge("W2", "X2", weight=4)
@@ -431,8 +467,87 @@ def calcular_rota():
     #Y2
     grafo.add_edge("Y2", "Z2", weight=4)
 
+    #Z2
+    grafo.add_edge("Z2", "F3", weight=5)
+    grafo.add_edge("Z2", "S2", weight=10)
+
     #A3
     grafo.add_edge("A3", "B3", weight=5)
+
+    #B3
+
+    #C3
+
+    #D3
+
+    #F3
+    grafo.add_edge("F3", "D3", weight=5)
+    grafo.add_edge("F3", "G3", weight=2)
+
+    #G3
+    grafo.add_edge("G3", "H3", weight=1)
+    grafo.add_edge("G3", "Q3", weight=5)
+
+    #H3
+    grafo.add_edge("H3", "P3", weight=10)
+    grafo.add_edge("H3", "I3", weight=5)
+
+    #I3
+    grafo.add_edge("I3", "O3", weight=6)
+    grafo.add_edge("I3", "J3", weight=5)
+
+    #J3
+    grafo.add_edge("J3", "N3", weight=7)
+    grafo.add_edge("J3", "K3", weight=5)
+
+    #K3
+
+    #L3
+    grafo.add_edge("L3", "O3", weight=7)
+
+    #M3
+    grafo.add_edge("M3", "N3", weight=5)
+
+    #N3
+    grafo.add_edge("N3", "B4", weight=5)
+
+    #O3
+    grafo.add_edge("O3", "B4", weight=5)
+
+    #P3
+
+    #Q3
+    grafo.add_edge("Q3", "R3", weight=5)
+
+    #R3
+    grafo.add_edge("R3", "Z", weight=5)
+    grafo.add_edge("R3", "S3", weight=5)
+
+    #S3
+    grafo.add_edge("S3", "U3", weight=7)
+    grafo.add_edge("S3", "V3", weight=8)
+
+    #T3
+    grafo.add_edge("T3", "U3", weight=5)
+
+    #U3
+
+    #V3
+    grafo.add_edge("V3", "X3", weight=3)
+    grafo.add_edge("V3", "W3", weight=6)
+
+    #W3
+
+    #X3
+    grafo.add_edge("X3", "A4", weight=6)
+    grafo.add_edge("X3", "Y3", weight=6)
+
+    #Y3
+    grafo.add_edge("Y3", "Z3", weight=6)
+
+    #Z3
+
+
 
 
 
