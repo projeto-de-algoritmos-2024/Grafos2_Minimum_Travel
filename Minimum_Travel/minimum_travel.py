@@ -54,5 +54,22 @@ def mudar_cor(icon_button):
     else:
         icon_button.config(bg="blue")  # Caso contrário, torna verde
 
+# Função para registrar a escolha da aresta
+esquinas_selecionadas = []
+def selecionar_esquina(icon_button, nome):
+    # Verifica se o botão está verde (selecionado)
+    if icon_button.cget('bg') == "green":
+        esquinas_selecionadas.remove(nome)  # Remove da lista de selecionadas
+    else:
+        if len(esquinas_selecionadas) < 5:
+            esquinas_selecionadas.append(nome)  # Adiciona à lista de selecionadas
+        else:
+            mensagem_label.config(text="Você já selecionou 5 esquinas!")  # Exibe a mensagem de aviso
+            return
+    mudar_cor(icon_button)  # Muda a cor do botão
+    mensagem_label.config(text=f"Esquinas selecionadas: {len(esquinas_selecionadas)}")  # Atualiza o contador
+
+
+
 # Executando a interface gráfica
 root.mainloop()
