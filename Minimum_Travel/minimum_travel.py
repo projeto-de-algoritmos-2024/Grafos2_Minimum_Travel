@@ -206,22 +206,41 @@ def calcular_rota():
     # Cria um subgrafo contendo apenas os caminhos mínimos entre as arestas selecionadas
     subgrafo = nx.Graph()
     for i, origem in enumerate(esquinas_selecionadas):
-        for destino in esquinas_selecionadas[i+1:]:
-            # Calcula o menor caminho entre origem e destino
-            caminho = nx.shortest_path(grafo, source=origem, target=destino, weight="weight")
-            # Adiciona ao subgrafo apenas as arestas do caminho direto
-            for u, v in zip(caminho[:-1], caminho[1:]):
-                peso = grafo[u][v]["weight"]
-                subgrafo.add_edge(u, v, weight=peso)
+        for destino in esquinas_selecionadas[i + 1:]:
+            try:
+                # Calcula o menor caminho entre origem e destino
+                caminho = nx.shortest_path(grafo, source=origem, target=destino, weight="weight")
+                # Adiciona ao subgrafo apenas as arestas do menor caminho
+                for u, v in zip(caminho[:-1], caminho[1:]):
+                    peso = grafo[u][v]["weight"]
+                    subgrafo.add_edge(u, v, weight=peso)
+            except nx.NetworkXNoPath:
+                # Ignora se não houver caminho entre as esquinas
+                mensagem_label.config(text=f"Sem caminho entre {origem} e {destino}")
 
     # Calcula a árvore geradora mínima do subgrafo
     arvore_minima = nx.minimum_spanning_tree(subgrafo, weight="weight")
 
-    # Remove qualquer mensagem antiga
-    mensagem_label.config(text="")
+    # Cria um subgrafo final apenas com os caminhos necessários
+    subgrafo_final = nx.Graph()
+    
+    # Identificar os nós úteis: todos que estão em trajetos entre esquinas selecionadas
+    nos_uteis = set()
+    for i, origem in enumerate(esquinas_selecionadas):
+        for destino in esquinas_selecionadas[i + 1:]:
+            try:
+                caminho = nx.shortest_path(arvore_minima, source=origem, target=destino, weight="weight")
+                nos_uteis.update(caminho)
+            except nx.NetworkXNoPath:
+                continue
 
-    # Desenha as arestas da árvore geradora mínima no mapa
-    desenhar_arestas(arvore_minima)
+    # Adiciona apenas arestas entre nós úteis ao subgrafo final
+    for u, v, data in arvore_minima.edges(data=True):
+        if u in nos_uteis and v in nos_uteis:
+            subgrafo_final.add_edge(u, v, weight=data["weight"])
+
+    mensagem_label.config(text="")
+    desenhar_arestas(subgrafo_final)
 
 # Botão para calcular a árvore geradora mínima
 calcular_btn = tk.Button(root, text="Calcular Árvore Geradora Mínima", command=calcular_rota)
