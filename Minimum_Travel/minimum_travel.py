@@ -152,8 +152,6 @@ esquinas = {
     "Z2": (199, 401),
     "A3": (370, 390),
     "B3": (386, 442),
-
-    #new E3
     "C3": (281, 303),
     "D3": (230, 321),
     "F3": (178, 338),
@@ -180,12 +178,30 @@ esquinas = {
     "A4": (74, 17),
     "B4": (115, 475),
 
+    #NEW
+    "C4": (271, 90),
+    "D4": (251, 31),
+    "E4": (204, 47),
+    "F4": (222, 106),
+    "G4": (352, 280),
+    "H4": (345, 251),
+    "I4": (331, 253),
+    "J4": (364, 228),
+    "K4": (385, 288),
+    "L4": (427, 274),
+    "M4": (407, 213),
+    "N4": (415, 238),
+    "O4": (433, 207),
+    "P4": (451, 256),
+
+    
+
 }
 
 # Criando um dicionário para armazenar os botões
 botões = {}
 for nome, (x, y) in esquinas.items():
-    botões[nome] = tk.Button(root, text=nome, command=lambda nome=nome: selecionar_esquina(botões[nome], nome), width=1, font=("Arial", 6))
+    botões[nome] = tk.Button(root, command=lambda nome=nome: selecionar_esquina(botões[nome], nome), width=1, font=("Arial", 3))
     canvas.create_window(x, y, window=botões[nome])
 
 # Função para desenhar a árvore geradora mínima no mapa
@@ -201,6 +217,8 @@ def calcular_rota():
     #A
     grafo.add_edge("A", "B", weight=5)
     grafo.add_edge("A", "T", weight=7)
+    grafo.add_edge("A", "C4", weight=2)
+    grafo.add_edge("A", "D4", weight=2)
 
     #B
     grafo.add_edge("B", "C", weight=5)
@@ -227,12 +245,16 @@ def calcular_rota():
     grafo.add_edge("G", "H", weight=5)
     grafo.add_edge("G", "I", weight=5)
     grafo.add_edge("G", "V", weight=5)
+    grafo.add_edge("G", "J4", weight=1)
+    grafo.add_edge("G", "M4", weight=3)
 
     #H
 
     #I
     grafo.add_edge("I", "J", weight=5)
     grafo.add_edge("I", "L", weight=5)
+    grafo.add_edge("I", "M4", weight=1)
+    grafo.add_edge("I", "O4", weight=1)
 
     #J
     grafo.add_edge("J", "K", weight=5)
@@ -269,6 +291,7 @@ def calcular_rota():
     #T
     grafo.add_edge("T", "U", weight=5)
     grafo.add_edge("T", "U3", weight=6)
+    grafo.add_edge("T", "C4", weight=2)
 
     #U
     grafo.add_edge("U", "V", weight=5)
@@ -277,10 +300,14 @@ def calcular_rota():
     #V
     grafo.add_edge("V", "Y", weight=5)
     grafo.add_edge("V", "W", weight=5)
+    grafo.add_edge("V", "I4", weight=2)
+    grafo.add_edge("V", "J4", weight=5)
 
     #W
     grafo.add_edge("W", "C3", weight=5)
     grafo.add_edge("W", "T1", weight=5)
+    grafo.add_edge("W", "G4", weight=2)
+    grafo.add_edge("W", "I4", weight=3)
 
     #X
     grafo.add_edge("X", "Y", weight=5)
@@ -547,6 +574,40 @@ def calcular_rota():
 
     #Z3
 
+    #C4
+    grafo.add_edge("C4", "F4", weight=5)
+
+    #D4
+    grafo.add_edge("D4", "E4", weight=5)
+
+    #E4
+    grafo.add_edge("E4", "F4", weight=6)
+
+    #F4
+
+    #G4
+    grafo.add_edge("G4", "H4", weight=3)
+
+    #H4
+    grafo.add_edge("H4", "I4", weight=1)
+
+    #I4
+
+    #J4
+    grafo.add_edge("J4", "K4", weight=6)
+
+    #K4
+    grafo.add_edge("K4", "L4", weight=4)
+
+    #L4
+
+    #M4
+    grafo.add_edge("M4", "N4", weight=3)
+
+    #N4
+
+    #O4
+    grafo.add_edge("O4", "P4", weight=5)
 
 
 
