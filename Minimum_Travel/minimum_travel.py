@@ -71,32 +71,32 @@ def selecionar_esquina(icon_button, nome):
 
 # Criando botões de ícones para cada esquina
 esquinas = {
-    "A": (275, 62),  
-    "B": (313, 52),
-    "C": (337, 49),
-    "D": (363, 37),
-    "E": (385, 29),
-    "F": (414, 21),
-    "G": (447, 17),
-    "H": (330, 212),
-    "I": (359, 150),
-    "J": (379, 201),
-    "K": (387, 139),
-    "L": (407, 192),
-    "M": (397, 78),
-    "N": (435, 182),
-    "O": (425, 70),
-    "P": (460, 173),
-    "Q": (458, 102),
-    "R": (482, 163),
-    "S": (500, 155),
-    "T": (256, 119),
-    "U": (277, 166),
-    "V": (296, 215),
-    "W": (313, 270),
-    "X": (486, 35),
-    "Y": (499, 90),
-    "Z": (520, 137),
+    "A": (262, 62),  
+    "B": (314, 45),
+    "C": (366, 26),
+    "D": (418, 11),
+    "E": (454, 1),
+    "G": (373, 218),
+    "H": (354, 163),
+    "I": (423, 202),
+    "J": (404, 146),
+    "K": (390, 98),
+    "L": (474, 183),
+    "M": (453, 126),
+    "N": (441, 80),
+    "O": (516, 175),
+    "P": (524, 158),
+    "Q": (494, 111),
+    "R": (477, 58),
+    "S": (530, 218),
+    "T": (283, 129),
+    "U": (301, 181),
+    "V": (317, 234),
+    "W": (335, 286),
+    "X": (270, 302),
+    "Y": (251, 251),
+    "Z": (203, 269),
+    "F": (187, 220),
 }
 
 # Criando um dicionário para armazenar os botões
@@ -114,74 +114,89 @@ def desenhar_arestas(arvore_minima):
 
 def calcular_rota():
     grafo = nx.Graph()
-    grafo.add_edge("A", "B", weight=3)
-    grafo.add_edge("A", "T", weight=5)
-    grafo.add_edge("A", "V", weight=15)
-    grafo.add_edge("A", "W", weight=20)
-    grafo.add_edge("A", "H", weight=20)
-    grafo.add_edge("B", "C", weight=2)
-    grafo.add_edge("B", "I", weight=10)
-    grafo.add_edge("B", "J", weight=15)
-    grafo.add_edge("C", "D", weight=3)
-    grafo.add_edge("C", "I", weight=10)
-    grafo.add_edge("C", "J", weight=15)
-    grafo.add_edge("D", "E", weight=3)
-    grafo.add_edge("D", "M", weight=5)
-    grafo.add_edge("D", "N", weight=20)
-    grafo.add_edge("E", "M", weight=5)
-    grafo.add_edge("E", "N", weight=20)
-    grafo.add_edge("E", "F", weight=3)
-    grafo.add_edge("F", "O", weight=5)
-    grafo.add_edge("F", "Q", weight=15)
-    grafo.add_edge("F", "P", weight=20)
-    grafo.add_edge("F", "R", weight=20)
-    grafo.add_edge("G", "S", weight=20)
-    grafo.add_edge("G", "X", weight=5)
-    grafo.add_edge("G", "Y", weight=15)
-    grafo.add_edge("G", "Z", weight=20)
-    grafo.add_edge("H", "T", weight=15)
-    grafo.add_edge("H", "U", weight=10)
-    grafo.add_edge("H", "V", weight=3)
-    grafo.add_edge("H", "W", weight=5)
-    grafo.add_edge("H", "J", weight=4)
-    grafo.add_edge("H", "L", weight=8)
-    grafo.add_edge("H", "N", weight=12)
-    grafo.add_edge("H", "P", weight=16)
-    grafo.add_edge("H", "R", weight=20)
-    grafo.add_edge("H", "S", weight=24)
+
+    #A
+    grafo.add_edge("A", "B", weight=5)
+    grafo.add_edge("A", "T", weight=7)
+
+    #B
+    grafo.add_edge("B", "C", weight=5)
+    grafo.add_edge("B", "H", weight=12)
+
+    #C
+    grafo.add_edge("C", "D", weight=5)
+    grafo.add_edge("C", "K", weight=7)
+
+    #D
+    grafo.add_edge("D", "E", weight=5)
+    grafo.add_edge("D", "N", weight=7)
+
+    #E
+    grafo.add_edge("E", "R", weight=5)
+
+    #F
+    grafo.add_edge("F", "U", weight=10)
+    grafo.add_edge("F", "Z", weight=5)
+
+    #G
+    grafo.add_edge("G", "H", weight=5)
+    grafo.add_edge("G", "I", weight=5)
+    grafo.add_edge("G", "V", weight=5)
+
+    #H
+
+    #I
     grafo.add_edge("I", "J", weight=5)
-    grafo.add_edge("I", "B", weight=10)
-    grafo.add_edge("K", "M", weight=5)
-    grafo.add_edge("K", "L", weight=5)
-    grafo.add_edge("K", "N", weight=5)
-    grafo.add_edge("L", "J", weight=4)
-    grafo.add_edge("L", "N", weight=4)
-    grafo.add_edge("L", "P", weight=8)
-    grafo.add_edge("L", "R", weight=12)
-    grafo.add_edge("L", "S", weight=16)
-    grafo.add_edge("M", "N", weight=15)
-    grafo.add_edge("N", "P", weight=4)
-    grafo.add_edge("N", "R", weight=8)
-    grafo.add_edge("N", "S", weight=12)
+    grafo.add_edge("I", "L", weight=5)
+
+    #J
+    grafo.add_edge("J", "K", weight=5)
+
+    #K
+    
+    #L
+    grafo.add_edge("L", "M", weight=5)
+    grafo.add_edge("L", "O", weight=5)
+
+    #M
+    grafo.add_edge("M", "N", weight=5)
+
+    #N
+
+    #O
+    grafo.add_edge("O", "P", weight=1)
     grafo.add_edge("O", "Q", weight=5)
-    grafo.add_edge("O", "R", weight=15)
-    grafo.add_edge("O", "P", weight=15)
-    grafo.add_edge("P", "R", weight=4)
-    grafo.add_edge("P", "S", weight=8)
-    grafo.add_edge("R", "S", weight=4)
-    grafo.add_edge("S", "Z", weight=1)
-    grafo.add_edge("S", "Y", weight=6)
-    grafo.add_edge("S", "X", weight=11)
+    grafo.add_edge("O", "S", weight=5)
+
+    #P
+
+    #Q
+    grafo.add_edge("Q", "R", weight=5)
+
+    #R
+
+    #S
+    
+    #T
     grafo.add_edge("T", "U", weight=5)
-    grafo.add_edge("T", "V", weight=10)
-    grafo.add_edge("T", "W", weight=15)
+
+    #U
     grafo.add_edge("U", "V", weight=5)
-    grafo.add_edge("U", "W", weight=10)
+
+    #V
+    grafo.add_edge("V", "Y", weight=5)
     grafo.add_edge("V", "W", weight=5)
-    grafo.add_edge("V", "H", weight=2)
+
+    #W
+    grafo.add_edge("W", "X", weight=5)
+
+    #X
     grafo.add_edge("X", "Y", weight=5)
-    grafo.add_edge("X", "Z", weight=10)
+
+    #Y
     grafo.add_edge("Y", "Z", weight=5)
+
+    #Z
 
     # Valida se há arestas selecionadas
     if len(esquinas_selecionadas) < 2:
