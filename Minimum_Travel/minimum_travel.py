@@ -69,7 +69,41 @@ def selecionar_esquina(icon_button, nome):
     mudar_cor(icon_button)  # Muda a cor do botão
     mensagem_label.config(text=f"Esquinas selecionadas: {len(esquinas_selecionadas)}")  # Atualiza o contador
 
+# Criando botões de ícones para cada esquina
+esquinas = {
+    "A": (275, 62),  
+    "B": (313, 52),
+    "C": (337, 49),
+    "D": (363, 37),
+    "E": (385, 29),
+    "F": (414, 21),
+    "G": (447, 17),
+    "H": (330, 212),
+    "I": (359, 150),
+    "J": (379, 201),
+    "K": (387, 139),
+    "L": (407, 192),
+    "M": (397, 78),
+    "N": (435, 182),
+    "O": (425, 70),
+    "P": (460, 173),
+    "Q": (458, 102),
+    "R": (482, 163),
+    "S": (500, 155),
+    "T": (256, 119),
+    "U": (277, 166),
+    "V": (296, 215),
+    "W": (313, 270),
+    "X": (486, 35),
+    "Y": (499, 90),
+    "Z": (520, 137),
+}
 
+# Criando um dicionário para armazenar os botões
+botões = {}
+for nome, (x, y) in esquinas.items():
+    botões[nome] = tk.Button(root, text=nome, command=lambda nome=nome: selecionar_esquina(botões[nome], nome))
+    canvas.create_window(x, y, window=botões[nome])
 
 # Executando a interface gráfica
 root.mainloop()
