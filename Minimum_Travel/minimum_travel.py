@@ -98,12 +98,66 @@ esquinas = {
     "Y": (251, 251),
     "Z": (203, 269),
     "F": (187, 220),
+    "A1": (693, 47),
+    "B1": (573, 141),
+    "C1": (709, 95),
+    "D1": (583, 202),
+    "E1": (633, 183),
+    "F1": (659, 173),
+    "G1": (685, 166),
+    "H1": (730, 149),
+    "I1": (620, 311),
+    "J1": (670, 295),
+    "K1": (720, 279),
+    "L1": (771, 260),
+    "M1": (635, 358),
+    "N1": (686, 338),
+    "O1": (733, 317),
+    "P1": (779, 296),
+    "Q1": (769, 370),
+    "R1": (680, 399),
+    "S1": (671, 366),
+    "T1": (354, 335),
+    "U1": (587, 391),
+    "V1": (566, 327),
+    "W1": (546, 274),
+    "X1": (598, 425),
+    "Y1": (517, 449),
+    "Z1": (501, 405),
+    "A2": (581, 375),
+    "B2": (666, 191),
+    "C2": (581, 161),
+    "D2": (718, 387),
+    "E2": (620, 420),
+    "F2": (729, 421),
+    "G2": (634, 453),
+    "H2": (534, 484),
+    "I2": (526, 469),
+    "J2": (741, 464),
+    "K2": (650, 498),
+    "L2": (759, 508),
+    "M2": (404, 491),
+    "N2": (347, 509),
+    "O2": (293, 517),
+    "P2": (390, 458),
+    "Q2": (337, 475),
+    "R2": (286, 493),
+    "S2": (236, 508),
+    "T2": (203, 520),
+    "U2": (345, 350),
+    "V2": (300, 365),
+    "W2": (318, 416),
+    "X2": (265, 433),
+    "Y2": (250, 384),
+    "Z2": (199, 401),
+    "A3": (370, 390),
+    "B3": (386, 442),
 }
 
 # Criando um dicionário para armazenar os botões
 botões = {}
 for nome, (x, y) in esquinas.items():
-    botões[nome] = tk.Button(root, text=nome, command=lambda nome=nome: selecionar_esquina(botões[nome], nome))
+    botões[nome] = tk.Button(root, text=nome, command=lambda nome=nome: selecionar_esquina(botões[nome], nome), width=1, font=("Arial", 6))
     canvas.create_window(x, y, window=botões[nome])
 
 # Função para desenhar a árvore geradora mínima no mapa
@@ -170,13 +224,17 @@ def calcular_rota():
     grafo.add_edge("O", "S", weight=5)
 
     #P
+    grafo.add_edge("P", "B1", weight=5)
 
     #Q
     grafo.add_edge("Q", "R", weight=5)
+    grafo.add_edge("Q", "A1", weight=20)
 
     #R
 
     #S
+    grafo.add_edge("S", "D1", weight=5)
+    grafo.add_edge("S", "W1", weight=5)
     
     #T
     grafo.add_edge("T", "U", weight=5)
@@ -190,6 +248,7 @@ def calcular_rota():
 
     #W
     grafo.add_edge("W", "X", weight=5)
+    grafo.add_edge("W", "T1", weight=5)
 
     #X
     grafo.add_edge("X", "Y", weight=5)
@@ -198,6 +257,185 @@ def calcular_rota():
     grafo.add_edge("Y", "Z", weight=5)
 
     #Z
+
+    #A1
+    grafo.add_edge("A1", "C1", weight=5)
+
+    #B1
+    grafo.add_edge("B1", "C2", weight=1)
+    grafo.add_edge("B1", "C1", weight=15)
+
+    #C1
+    grafo.add_edge("C1", "H1", weight=5)
+
+    #D1
+    grafo.add_edge("D1", "E1", weight=5)
+    grafo.add_edge("D1", "I1", weight=10)
+
+    #E1
+    grafo.add_edge("E1", "J1", weight=10)
+    grafo.add_edge("E1", "F1", weight=3)
+
+    #F1
+    grafo.add_edge("F1", "G1", weight=3)
+    grafo.add_edge("F1", "B2", weight=5)
+    
+    #G1
+    grafo.add_edge("G1", "H1", weight=5)
+    grafo.add_edge("G1", "K1", weight=10)
+
+    #H1
+    grafo.add_edge("H1", "L1", weight=10)
+
+    #I1
+    grafo.add_edge("I1", "J1", weight=5)
+    grafo.add_edge("I1", "M1", weight=5)
+
+    #J1
+    grafo.add_edge("J1", "N1", weight=5)
+
+    #K1
+    grafo.add_edge("K1", "L1", weight=5)
+    grafo.add_edge("K1", "O1", weight=5)
+
+    #L1
+    grafo.add_edge("L1", "P1", weight=5)
+
+    #M1
+    
+    #N1
+    grafo.add_edge("N1", "S1", weight=3)
+
+    #O1
+
+    #P1
+    grafo.add_edge("P1", "Q1", weight=7)
+
+    #Q1
+    grafo.add_edge("Q1", "R1", weight=7)
+    grafo.add_edge("Q1", "D2", weight=4)
+
+    #R1
+    grafo.add_edge("R1", "X1", weight=7)
+    grafo.add_edge("R1", "S1", weight=3)
+    grafo.add_edge("R1", "D2", weight=3)
+    grafo.add_edge("R1", "E2", weight=5)
+
+    #S1
+    
+    #T1
+    grafo.add_edge("T1", "W1", weight=20)
+    grafo.add_edge("T1", "U2", weight=1)
+    grafo.add_edge("T1", "A3", weight=5)
+
+    #U1
+    grafo.add_edge("U1", "X1", weight=3)
+    grafo.add_edge("U1", "A2", weight=1)
+
+    #V1
+    grafo.add_edge("V1", "W1", weight=5)
+    grafo.add_edge("V1", "A2", weight=5)
+    grafo.add_edge("V1", "A3", weight=20)
+
+    #W1
+
+    #X1
+    grafo.add_edge("X1", "Y1", weight=7)
+    grafo.add_edge("X1", "E2", weight=1)
+    grafo.add_edge("X1", "U1", weight=3)
+
+    #Y1
+    grafo.add_edge("Y1", "Y1", weight=5)
+    grafo.add_edge("Y1", "I2", weight=1)
+    grafo.add_edge("Y1", "Z1", weight=5)
+    grafo.add_edge("Y1", "M2", weight=7)
+
+    #Z1
+    grafo.add_edge("Z1", "A2", weight=5)
+    grafo.add_edge("Z1", "B3", weight=10)
+
+    #A2
+    
+    #B2
+
+    #C2
+
+    #D2
+    grafo.add_edge("D2", "F2", weight=3)
+
+    #E2
+    grafo.add_edge("E2", "G2", weight=3)
+
+    #F2
+    grafo.add_edge("F2", "G2", weight=10)
+    grafo.add_edge("F2", "J2", weight=5)
+
+    #G2
+    grafo.add_edge("G2", "K2", weight=5)
+    grafo.add_edge("G2", "H2", weight=10)
+
+    #H2
+    grafo.add_edge("H2", "I2", weight=1)
+
+    #I2
+
+    #J2
+    grafo.add_edge("J2", "K2", weight=5)
+    grafo.add_edge("J2", "L2", weight=5)
+
+    #K2
+
+    #L2
+
+    #M2
+    grafo.add_edge("M2", "P2", weight=3)
+    grafo.add_edge("M2", "N2", weight=4)
+
+    #N2
+    grafo.add_edge("N2", "O2", weight=4)
+    grafo.add_edge("N2", "Q2", weight=2)
+
+    #O2
+    grafo.add_edge("O2", "R2", weight=2)
+
+    #P2
+    grafo.add_edge("P2", "Q2", weight=4)
+    grafo.add_edge("P2", "B3", weight=1)
+
+    #Q2
+    grafo.add_edge("Q2", "R2", weight=4)
+    grafo.add_edge("Q2", "W2", weight=5)
+
+    #R2
+    grafo.add_edge("R2", "S2", weight=4)
+    grafo.add_edge("R2", "X2", weight=5)
+
+    #S2
+    grafo.add_edge("S2", "T2", weight=2)
+    grafo.add_edge("S2", "Z2", weight=10)
+
+    #T2
+
+    #U2
+    grafo.add_edge("U2", "V2", weight=4)
+
+    #V2
+    grafo.add_edge("V2", "W2", weight=5)
+
+    #W2
+    grafo.add_edge("W2", "X2", weight=4)
+
+    #X2
+    grafo.add_edge("X2", "Y2", weight=5)
+
+    #Y2
+    grafo.add_edge("Y2", "Z2", weight=4)
+
+    #A3
+    grafo.add_edge("A3", "B3", weight=5)
+
+
+
 
     # Valida se há arestas selecionadas
     if len(esquinas_selecionadas) < 2:
