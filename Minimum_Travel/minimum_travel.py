@@ -49,16 +49,16 @@ mensagem_label.pack()
 
 # Função para trocar a cor do ícone
 def mudar_cor(icon_button):
-    if icon_button.cget('bg') == "pink":
+    if icon_button.cget('bg') == "green":
         icon_button.config(bg="SystemButtonFace")  # Troca a cor para o padrão (cor normal)
     else:
-        icon_button.config(bg="pink")  # Caso contrário, torna verde
+        icon_button.config(bg="green")  # Caso contrário, torna verde
 
 # Função para registrar a escolha da aresta
 esquinas_selecionadas = []
 def selecionar_esquina(icon_button, nome):
     # Verifica se o botão está verde (selecionado)
-    if icon_button.cget('bg') == "pink":
+    if icon_button.cget('bg') == "green":
         esquinas_selecionadas.remove(nome)  # Remove da lista de selecionadas
     else:
         if len(esquinas_selecionadas) < 5:
@@ -207,6 +207,29 @@ def calcular_rota():
 
     # Desenha as arestas da árvore geradora mínima no mapa
     desenhar_arestas(arvore_minima)
+
+# Botão para calcular a árvore geradora mínima
+calcular_btn = tk.Button(root, text="Calcular Árvore Geradora Mínima", command=calcular_rota)
+calcular_btn.pack()
+
+# Função para resetar as seleções e rota
+def resetar_selecoes():
+    # Limpa a lista de esquinas selecionadas
+    esquinas_selecionadas.clear()
+    
+    # Reseta as cores dos botões
+    for botao in botões.values():
+        botao.config(bg="SystemButtonFace")  # Volta à cor padrão
+    
+    # Remove todas as linhas desenhadas no canvas
+    canvas.delete("linha")  # Identificador para linhas desenhadas
+    
+    # Limpa mensagens
+    mensagem_label.config(text="Seleções e rota resetadas.")
+
+# Adiciona o botão de resetar na interface
+botao_resetar = tk.Button(root, text="Resetar", command=resetar_selecoes)
+botao_resetar.pack()
 
 # Executando a interface gráfica
 root.mainloop()
