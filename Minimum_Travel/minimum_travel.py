@@ -69,36 +69,6 @@ def selecionar_esquina(icon_button, nome):
     mudar_cor(icon_button)  # Muda a cor do botão
     mensagem_label.config(text=f"Esquinas selecionadas: {len(esquinas_selecionadas)}")  # Atualiza o contador
 
-def prim_arvore_geradora_minima(grafo, nos_selecionados):
-    import heapq
-
-    # Começa com qualquer nó selecionado
-    no_inicial = nos_selecionados[0]
-    visitados = set()
-    heap = []
-    arvore_minima = nx.Graph()
-
-    # Adiciona todas as arestas do nó inicial na heap
-    for vizinho, atributos in grafo[no_inicial].items():
-        heapq.heappush(heap, (atributos['weight'], no_inicial, vizinho))
-
-    visitados.add(no_inicial)
-
-    # Enquanto houver arestas na heap
-    while heap and len(visitados) < len(nos_selecionados):
-        peso, u, v = heapq.heappop(heap)
-
-        if v not in visitados:
-            # Adiciona a aresta à árvore geradora mínima
-            arvore_minima.add_edge(u, v, weight=peso)
-            visitados.add(v)
-
-            # Adiciona as novas arestas do nó recém-visitado à heap
-            for vizinho, atributos in grafo[v].items():
-                if vizinho not in visitados:
-                    heapq.heappush(heap, (atributos['weight'], v, vizinho))
-
-    return arvore_minima
 
 # Criando botões de ícones para cada esquina
 esquinas = {
@@ -249,13 +219,48 @@ def calcular_rota():
                 # Ignora se não houver caminho entre as esquinas
                 mensagem_label.config(text=f"Sem caminho entre {origem} e {destino}")
 
-    # Aplica o algoritmo de Prim no subgrafo
-    arvore_minima = nx.minimum_spanning_tree(subgrafo, algorithm="prim", weight="weight")
-    
-    # Cria um subgrafo final apenas com os caminhos necessários
-    subgrafo_final = nx.Graph()
+    # Implementação manual do algoritmo de Prim
+    def prim_algoritmo_manual(grafo):
+        # Conjuntos de nós visitados e não visitados
+        visitados = set()
+        nao_visitados = set(grafo.nodes)
+        arestas_resultantes = []
 
-    # Identificar os nós úteis: todos que estão em trajetos entre esquinas selecionadas
+        # Começa por um nó arbitrário
+        no_atual = next(iter(grafo.nodes))
+        visitados.add(no_atual)
+        nao_visitados.remove(no_atual)
+
+        # Enquanto houver nós não visitados
+        while nao_visitados:
+            menor_aresta = None
+            menor_peso = float('inf')
+
+            # Percorre as arestas conectando nós visitados a não visitados
+            for u in visitados:
+                for v, atributos in grafo[u].items():
+                    if v in nao_visitados and atributos["weight"] < menor_peso:
+                        menor_aresta = (u, v)
+                        menor_peso = atributos["weight"]
+
+            # Adiciona a menor aresta à solução
+            if menor_aresta:
+                u, v = menor_aresta
+                arestas_resultantes.append((u, v, menor_peso))
+                visitados.add(v)
+                nao_visitados.remove(v)
+
+        # Retorna o grafo gerado pelas arestas da árvore mínima
+        arvore_minima = nx.Graph()
+        for u, v, peso in arestas_resultantes:
+            arvore_minima.add_edge(u, v, weight=peso)
+
+        return arvore_minima
+
+    # Aplica o algoritmo de Prim no subgrafo
+    arvore_minima = prim_algoritmo_manual(subgrafo)
+
+    # Identifica os nós úteis conectados pelas arestas da árvore mínima
     nos_uteis = set()
     for i, origem in enumerate(esquinas_selecionadas):
         for destino in esquinas_selecionadas[i + 1:]:
@@ -265,11 +270,13 @@ def calcular_rota():
             except nx.NetworkXNoPath:
                 continue
 
-    # Adiciona apenas arestas entre nós úteis ao subgrafo final
+    # Cria o subgrafo final apenas com arestas entre nós úteis
+    subgrafo_final = nx.Graph()
     for u, v, data in arvore_minima.edges(data=True):
         if u in nos_uteis and v in nos_uteis:
             subgrafo_final.add_edge(u, v, weight=data["weight"])
 
+    # Atualiza a interface com o grafo final
     mensagem_label.config(text="")
     desenhar_arestas(subgrafo_final)
 
