@@ -43,5 +43,16 @@ root.bind("<Right>", mover_imagem)
 root.bind("<Up>", mover_imagem)
 root.bind("<Down>", mover_imagem)
 
+# Criando um Label para exibir mensagens
+mensagem_label = tk.Label(root, text="", fg="red")
+mensagem_label.pack()
+
+# Função para trocar a cor do ícone
+def mudar_cor(icon_button):
+    if icon_button.cget('bg') == "blue":
+        icon_button.config(bg="SystemButtonFace")  # Troca a cor para o padrão (cor normal)
+    else:
+        icon_button.config(bg="blue")  # Caso contrário, torna verde
+
 # Executando a interface gráfica
 root.mainloop()
