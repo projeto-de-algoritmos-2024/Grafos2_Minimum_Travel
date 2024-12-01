@@ -14,7 +14,7 @@ def mover_imagem(event):
 
 # Criando a janela principal
 root = tk.Tk()
-root.title("Mapa Interativo")
+root.title("Minimum Travel")
 
 # Carregando a imagem do mapa
 imagem_mapa = Image.open("caminho_para_o_mapa.jpg")
