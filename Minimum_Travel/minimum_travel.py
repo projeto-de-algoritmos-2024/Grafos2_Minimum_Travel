@@ -2,6 +2,16 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import networkx as nx
 
+def mover_imagem(event):
+    if event.keysym == 'Left':  # Move para a esquerda
+        canvas.xview_scroll(-1, "units")
+    elif event.keysym == 'Right':  # Move para a direita
+        canvas.xview_scroll(1, "units")
+    elif event.keysym == 'Up':  # Move para cima
+        canvas.yview_scroll(-1, "units")
+    elif event.keysym == 'Down':  # Move para baixo
+        canvas.yview_scroll(1, "units")
+
 # Criando a janela principal
 root = tk.Tk()
 root.title("Mapa Interativo")
@@ -23,6 +33,15 @@ canvas.pack()
 
 # Adicionando a imagem ao canvas
 canvas.create_image(0, 0, anchor="nw", image=imagem_tk)
+
+# Configurando o canvas para permitir rolagem (scroll)
+canvas.config(scrollregion=(0, 0, largura_imagem, altura_imagem))
+
+# Bind das teclas de navegação
+root.bind("<Left>", mover_imagem)
+root.bind("<Right>", mover_imagem)
+root.bind("<Up>", mover_imagem)
+root.bind("<Down>", mover_imagem)
 
 # Executando a interface gráfica
 root.mainloop()
