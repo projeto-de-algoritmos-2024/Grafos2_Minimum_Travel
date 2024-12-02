@@ -1,4 +1,4 @@
-# Slenderman
+# Minimum Travel
 
 **Número da Lista**: 37  
 **Conteúdo da Disciplina**: Grafos 2  
@@ -12,58 +12,63 @@
 
 ## Sobre
 
-O projeto se trata da evolução do jogo de sobrevivência chamado **Slenderman**, desenvolvido no primeiro módulo, no qual o jogador é perseguido pela criatura Slenderman e deve coletar notas para vencer. Este jogo utiliza conceitos de grafos para construir o mapa e gerenciar o movimento do inimigo.
+O Minimum Travel é um projeto que utiliza conceitos de Grafos 2, focando na aplicação do algoritmo de Prim para encontrar a árvore geradora mínima (Minimum Spanning Tree - MST) em um grafo. O projeto implementa uma interface gráfica interativa que permite aos usuários selecionar esquinas em um mapa e calcular a rota mínima entre elas.
 
 ### Uso de Grafos
 
-Os grafos foram utilizados para modelar o mapa do jogo como uma grade de posições interconectadas, facilitando a movimentação do inimigo em direção ao jogador. A estrutura de grafo também permite que o Slenderman navegue pelo mapa, escolhendo o caminho mais curto para se aproximar do jogador com base no algoritmo de busca em largura (BFS). Cada nó do grafo representa uma posição acessível no mapa, e cada conexão representa uma passagem entre posições adjacentes. Além disso, foi-se utilizado o algoritmo de Dijkstra para melhorar o sistema de pathfinding do inimigo
+O projeto implementa os seguintes conceitos de teoria dos grafos:
+
+1. **Representação de Mapa**: O mapa do jogo é modelado como um grafo, onde as esquinas são representadas por nós e as ruas por arestas.
+
+2. **Algoritmo de Prim**: Uma implementação manual do algoritmo de Prim é utilizada para encontrar a árvore geradora mínima do grafo.
+
+3. **Caminhos Mínimos**: O projeto calcula os caminhos mínimos entre esquinas selecionadas usando o algoritmo de caminho mais curto.
+
+4. **Subgrafos**: São criados subgrafos contendo apenas os caminhos relevantes entre as esquinas selecionadas pelo usuário.
 
 ## Screenshots
 
 | Tela de Introdução                         | Tela de Jogo                               |
 | ------------------------------------------ | ------------------------------------------ |
-| ![Intro](assets/intro.png)                    | ![Game](assets/game.png)                      |
+| Intro                    | Game                      |
 
 | Tela de Início do Jogo                     | Tela de Fim de Jogo                        |
 | ------------------------------------------ | ------------------------------------------ |
-| ![Start](assets/start.png)                    | ![End](assets/end.png)                        |
+| Start                    | End                        |
 
 ## Instalação 
 
 **Linguagem**: Python  
-**Framework**: Pygame  
+**Framework**: Tkinter, PIL, NetworkX
 
 ### Pré-requisitos
 
 1. Python 3.x instalado.
-2. Pygame instalado. Você pode instalar usando:
+2. Instale as bibliotecas necessárias usando:
    ```bash
-   pip install pygame
+   pip install tkinter pillow networkx
    ```
 
-### Rodando o jogo
+### Rodando o projeto
 
-1. Clone o repositório.
-2. Navegue até o diretório do projeto, a pasta Slenderman.
-3. Execute o jogo com o comando:
-   ```bash
-   python main.py
-   ```
+Para executar o projeto, navegue até o diretório do projeto e execute o arquivo principal:
+
+```bash
+python main.py
+```
 
 ## Uso
 
-Ao iniciar o jogo, você verá uma tela de introdução com duas opções: **Play** e **Info**.  
-1. Pressione **Play** para começar o jogo.
-2. Na tela **Info**, você encontrará as instruções de jogo.
+1. Ao iniciar o programa, você verá um mapa interativo.
+2. Clique em até 5 esquinas no mapa para selecioná-las.
+3. Após selecionar as esquinas, o programa calculará e exibirá a rota mínima entre elas.
+4. Use o botão de reset para limpar as seleções e começar novamente.
 
 ### Controles
 
-- `W` / `A` / `S` / `D` ou as setas direcionais para mover-se.
-- O objetivo é coletar todas as notas sem ser pego pelo Slenderman.
+- Clique do mouse: Selecionar esquinas
+- Botão de reset: Limpar seleções e rota
 
 ## Apresentação
 
-Este projeto foi desenvolvido para aplicar conceitos de grafos em uma simulação prática de perseguição e busca.
-
 - [Vídeo de apresentação Grafos 2]()
-

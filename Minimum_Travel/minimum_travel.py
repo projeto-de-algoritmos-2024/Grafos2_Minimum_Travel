@@ -17,7 +17,7 @@ root = tk.Tk()
 root.title("Minimum Travel")
 
 # Carregando a imagem do mapa
-imagem_mapa = Image.open("caminho_para_o_mapa.jpg")
+imagem_mapa = Image.open("Grafos2_Slenderman\Minimum_Travel\caminho_para_o_mapa.jpg")
 largura_imagem, altura_imagem = imagem_mapa.size
 
 # Definindo o tamanho da janela
