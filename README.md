@@ -73,4 +73,4 @@ python minimum_travel.py
 
 ## Apresentação
 
-- [Vídeo de apresentação Grafos 2]()
+- [Vídeo de apresentação Grafos 2](https://youtu.be/vUQW0DlNt7c)
