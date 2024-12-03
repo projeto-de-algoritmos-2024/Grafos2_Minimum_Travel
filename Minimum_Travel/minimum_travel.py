@@ -7,11 +7,36 @@ from tkinter import font as tkfont
 from PIL import Image, ImageTk
 import subprocess
 
+arvore_gerada = False
+
+def mostrar_erro(titulo, mensagem):
+    janela_erro = tk.Toplevel(root)
+    janela_erro.title(titulo)
+    janela_erro.geometry("300x150")
+
+    label_erro = tk.Label(janela_erro, text=mensagem, wraplength=250, justify="center")
+    label_erro.pack(expand=True)
+
+    botao_ok = tk.Button(janela_erro, text="OK", command=janela_erro.destroy)
+    botao_ok.pack(pady=10)
+
+    # Carregar e exibir a imagem de erro
+    imagem_erro = Image.open("caminho_para_imagem_de_erro.png")
+    imagem_erro = imagem_erro.resize((50, 50), Image.LANCZOS)
+    imagem_erro_tk = ImageTk.PhotoImage(imagem_erro)
+    label_imagem = tk.Label(janela_erro, image=imagem_erro_tk)
+    label_imagem.image = imagem_erro_tk  # Manter uma referência
+    label_imagem.pack(pady=10)
+
 class TelaInicial:
     def __init__(self, master):
         self.master = master
         self.master.title("Minimum Travel - Início")
         self.master.geometry("800x600")
+
+        # Variáveis para controlar as janelas abertas
+        self.janela_info = None
+        self.janela_controles = None
 
         # Carregar e redimensionar a imagem de fundo
         imagem_fundo = Image.open("./inicio.png")
@@ -33,7 +58,7 @@ class TelaInicial:
             self.master, 
             text="Começar", 
             font=botao_font, 
-            command=self.iniciar_jogo, 
+            command=self.iniciar_projeto, 
             bg="tan"
         )
         botao_comecar_window = self.canvas.create_window(400, 300, anchor="center", window=botao_comecar)
@@ -58,44 +83,45 @@ class TelaInicial:
         )
         botao_controles_window = self.canvas.create_window(500, 400, anchor="center", window=botao_controles)
 
-    def iniciar_jogo(self):
+    def iniciar_projeto(self):
         self.master.destroy()
         subprocess.run(["python", "main.py"])
 
     def mostrar_informacoes(self):
-        janela_info = tk.Toplevel(self.master)
-        janela_info.title("Informações do Jogo")
-        janela_info.geometry("400x300")
-        
-        info_text = tk.Text(janela_info, wrap=tk.WORD, padx=10, pady=10)
-        info_text.pack(expand=True, fill="both")
-        
-        info_text.insert(tk.END, "Minimum Travel é um jogo que utiliza conceitos de Grafos 2, focando na aplicação do algoritmo de Prim para encontrar a árvore geradora mínima em um grafo.\n\n")
-        info_text.insert(tk.END, "O objetivo é selecionar até 5 esquinas no mapa e encontrar a rota mínima entre elas.\n\n")
-        info_text.insert(tk.END, "O jogo implementa conceitos como representação de mapa como grafo, algoritmo de Prim, cálculo de caminhos mínimos e criação de subgrafos.")
-        
-        info_text.config(state=tk.DISABLED)
+        if self.janela_info is None or not self.janela_info.winfo_exists():
+            self.janela_info = tk.Toplevel(self.master)
+            self.janela_info.title("Informações do projeto")
+            self.janela_info.geometry("400x300")
+            
+            info_text = tk.Text(self.janela_info, wrap=tk.WORD, padx=10, pady=10)
+            info_text.pack(expand=True, fill="both")
+            
+            info_text.insert(tk.END, "Minimum Travel é um projeto que utiliza conceitos de Grafos 2, focando na aplicação do algoritmo de Prim para encontrar a árvore geradora mínima em um grafo.\n\n")
+            info_text.insert(tk.END, "O objetivo é selecionar até 5 esquinas no mapa e encontrar a rota mínima entre elas.\n\n")
+            info_text.insert(tk.END, "O projeto implementa conceitos como representação de mapa como grafo, algoritmo de Prim, cálculo de caminhos mínimos e criação de subgrafos.")
+            
+            info_text.config(state=tk.DISABLED)
+        else:
+            self.janela_info.lift()
 
     def mostrar_controles(self):
-        janela_controles = tk.Toplevel(self.master)
-        janela_controles.title("Controles do Jogo")
-        janela_controles.geometry("400x300")
-        
-        controles_text = tk.Text(janela_controles, wrap=tk.WORD, padx=10, pady=10)
-        controles_text.pack(expand=True, fill="both")
-        
-        controles_text.insert(tk.END, "Controles do Minimum Travel:\n\n")
-        controles_text.insert(tk.END, "- Clique do mouse: Selecionar esquinas (até 5)\n")
-        controles_text.insert(tk.END, "- Teclas de seta: Mover a visualização do mapa\n")
-        controles_text.insert(tk.END, "- Botão 'Calcular Árvore Geradora Mínima': Calcular e exibir a rota mínima\n")
-        controles_text.insert(tk.END, "- Botão 'Resetar': Limpar seleções e rota calculada")
-        
-        controles_text.config(state=tk.DISABLED)
-
-
-    def iniciar_jogo(self):
-        self.master.destroy()  # Fecha a janela inicial
-        subprocess.run(["python", "main.py"])  # Inicia o arquivo principal do jogo
+        if self.janela_controles is None or not self.janela_controles.winfo_exists():
+            self.janela_controles = tk.Toplevel(self.master)
+            self.janela_controles.title("Controles do projeto")
+            self.janela_controles.geometry("400x300")
+            
+            controles_text = tk.Text(self.janela_controles, wrap=tk.WORD, padx=10, pady=10)
+            controles_text.pack(expand=True, fill="both")
+            
+            controles_text.insert(tk.END, "Controles do Minimum Travel:\n\n")
+            controles_text.insert(tk.END, "- Clique do mouse: Selecionar esquinas (até 5)\n")
+            controles_text.insert(tk.END, "- Teclas de seta: Mover a visualização do mapa\n")
+            controles_text.insert(tk.END, "- Botão 'Calcular Árvore Geradora Mínima': Calcular e exibir a rota mínima\n")
+            controles_text.insert(tk.END, "- Botão 'Resetar': Limpar seleções e rota calculada")
+            
+            controles_text.config(state=tk.DISABLED)
+        else:
+            self.janela_controles.lift()
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -158,6 +184,11 @@ def mudar_cor(icon_button):
 # Função para registrar a escolha da aresta
 esquinas_selecionadas = []
 def selecionar_esquina(icon_button, nome):
+    global arvore_gerada
+
+    if arvore_gerada:
+        mostrar_erro("Resetar", "Você deve resetar antes de selecionar novas esquinas.")
+        return
     # Verifica se o botão está verde (selecionado)
     if icon_button.cget('bg') == "green":
         esquinas_selecionadas.remove(nome)  # Remove da lista de selecionadas
@@ -313,6 +344,15 @@ def desenhar_arestas(arvore_minima):
         canvas.create_line(x1, y1, x2, y2, fill="blue", width=2, tags="linha")  # Desenha a linha entre n1 e n2
 
 def calcular_rota():
+    global arvore_gerada
+    
+    if arvore_gerada:
+        mostrar_erro("Resetar", "Você deve resetar antes de selecionar novas esquinas.")
+        return
+
+    if len(esquinas_selecionadas) < 2:
+        mensagem_label.config(text="Selecione pelo menos duas esquinas!")
+        return
     grafo = nx.Graph()
 
     #A
@@ -734,6 +774,8 @@ def calcular_rota():
                 # Ignora se não houver caminho entre as esquinas
                 mensagem_label.config(text=f"Sem caminho entre {origem} e {destino}")
 
+    arvore_gerada = True
+
     # Implementação manual do algoritmo de Prim
     def prim_algoritmo_manual(grafo):
         # Conjuntos de nós visitados e não visitados
@@ -801,6 +843,8 @@ calcular_btn.pack()
 
 # Função para resetar as seleções e rota
 def resetar_selecoes():
+    global arvore_gerada
+    arvore_gerada = False
     # Limpa a lista de esquinas selecionadas
     esquinas_selecionadas.clear()
     
