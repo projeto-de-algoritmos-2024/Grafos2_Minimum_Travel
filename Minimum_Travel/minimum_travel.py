@@ -333,7 +333,7 @@ esquinas = {
 # Criando um dicionário para armazenar os botões
 botões = {}
 for nome, (x, y) in esquinas.items():
-    botões[nome] = tk.Button(root, command=lambda nome=nome: selecionar_esquina(botões[nome], nome), width=1, font=("Arial", 3))
+    botões[nome] = tk.Button(root,command=lambda nome=nome: selecionar_esquina(botões[nome], nome), width=1, font=("Arial", 3))
     canvas.create_window(x, y, window=botões[nome])
 
 # Função para desenhar a árvore geradora mínima no mapa
@@ -688,7 +688,7 @@ def calcular_rota():
     grafo.add_edge("Q3", "R3", weight=5)
 
     #R3
-    grafo.add_edge("R3", "Z", weight=5)
+    grafo.add_edge("R3", "F", weight=5)
     grafo.add_edge("R3", "S3", weight=5)
 
     #S3
