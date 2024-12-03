@@ -2,6 +2,56 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import networkx as nx
 
+import tkinter as tk
+from tkinter import font as tkfont
+from PIL import Image, ImageTk
+import subprocess
+
+class TelaInicial:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Minimum Travel - Início")
+        self.master.geometry("800x600")
+
+        # Carregar e redimensionar a imagem de fundo
+        imagem_fundo = Image.open("./inicio.png")
+        imagem_fundo = imagem_fundo.resize((800, 600), Image.LANCZOS)
+        self.fundo = ImageTk.PhotoImage(imagem_fundo)
+
+        # Criar canvas e adicionar imagem de fundo
+        self.canvas = tk.Canvas(self.master, width=800, height=600)
+        self.canvas.pack(fill="both", expand=True)
+        self.canvas.create_image(0, 0, image=self.fundo, anchor="nw")
+
+        # Subtítulo
+        subtitulo_font = tkfont.Font(family="Helvetica", size=18)
+        self.canvas.create_text(400, 160, text="Encontre a rota mínima entre esquinas", font=subtitulo_font, fill="white")
+
+        # Botão Começar
+        botao_font = tkfont.Font(family="Helvetica", size=14, weight="bold")
+        botao_comecar = tk.Button(self.master, text="Começar", font=botao_font, command=self.iniciar_jogo)
+        botao_comecar_window = self.canvas.create_window(400, 300, anchor="center", window=botao_comecar)
+
+        botao_comecar = tk.Button(
+        self.master, 
+        text="Começar", 
+        font=botao_font, 
+        command=self.iniciar_jogo, 
+        bg="tan"
+        )
+
+
+
+    def iniciar_jogo(self):
+        self.master.destroy()  # Fecha a janela inicial
+        subprocess.run(["python", "main.py"])  # Inicia o arquivo principal do jogo
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = TelaInicial(root)
+    root.mainloop()
+    
+
 def mover_imagem(event):
     if event.keysym == 'Left':  # Move para a esquerda
         canvas.xview_scroll(-1, "units")
@@ -17,7 +67,7 @@ root = tk.Tk()
 root.title("Minimum Travel")
 
 # Carregando a imagem do mapa
-imagem_mapa = Image.open("Grafos2_Slenderman\Minimum_Travel\caminho_para_o_mapa.jpg")
+imagem_mapa = Image.open("./caminho_para_o_mapa.jpg")
 largura_imagem, altura_imagem = imagem_mapa.size
 
 # Definindo o tamanho da janela
