@@ -29,17 +29,68 @@ class TelaInicial:
 
         # Botão Começar
         botao_font = tkfont.Font(family="Helvetica", size=14, weight="bold")
-        botao_comecar = tk.Button(self.master, text="Começar", font=botao_font, command=self.iniciar_jogo)
+        botao_comecar = tk.Button(
+            self.master, 
+            text="Começar", 
+            font=botao_font, 
+            command=self.iniciar_jogo, 
+            bg="tan"
+        )
         botao_comecar_window = self.canvas.create_window(400, 300, anchor="center", window=botao_comecar)
 
-        botao_comecar = tk.Button(
-        self.master, 
-        text="Começar", 
-        font=botao_font, 
-        command=self.iniciar_jogo, 
-        bg="tan"
+        # Botão Informações
+        botao_info = tk.Button(
+            self.master,
+            text="Informações",
+            font=botao_font,
+            command=self.mostrar_informacoes,
+            bg="tan"
         )
+        botao_info_window = self.canvas.create_window(300, 400, anchor="center", window=botao_info)
 
+        # Botão Controles
+        botao_controles = tk.Button(
+            self.master,
+            text="Controles",
+            font=botao_font,
+            command=self.mostrar_controles,
+            bg="tan"
+        )
+        botao_controles_window = self.canvas.create_window(500, 400, anchor="center", window=botao_controles)
+
+    def iniciar_jogo(self):
+        self.master.destroy()
+        subprocess.run(["python", "main.py"])
+
+    def mostrar_informacoes(self):
+        janela_info = tk.Toplevel(self.master)
+        janela_info.title("Informações do Jogo")
+        janela_info.geometry("400x300")
+        
+        info_text = tk.Text(janela_info, wrap=tk.WORD, padx=10, pady=10)
+        info_text.pack(expand=True, fill="both")
+        
+        info_text.insert(tk.END, "Minimum Travel é um jogo que utiliza conceitos de Grafos 2, focando na aplicação do algoritmo de Prim para encontrar a árvore geradora mínima em um grafo.\n\n")
+        info_text.insert(tk.END, "O objetivo é selecionar até 5 esquinas no mapa e encontrar a rota mínima entre elas.\n\n")
+        info_text.insert(tk.END, "O jogo implementa conceitos como representação de mapa como grafo, algoritmo de Prim, cálculo de caminhos mínimos e criação de subgrafos.")
+        
+        info_text.config(state=tk.DISABLED)
+
+    def mostrar_controles(self):
+        janela_controles = tk.Toplevel(self.master)
+        janela_controles.title("Controles do Jogo")
+        janela_controles.geometry("400x300")
+        
+        controles_text = tk.Text(janela_controles, wrap=tk.WORD, padx=10, pady=10)
+        controles_text.pack(expand=True, fill="both")
+        
+        controles_text.insert(tk.END, "Controles do Minimum Travel:\n\n")
+        controles_text.insert(tk.END, "- Clique do mouse: Selecionar esquinas (até 5)\n")
+        controles_text.insert(tk.END, "- Teclas de seta: Mover a visualização do mapa\n")
+        controles_text.insert(tk.END, "- Botão 'Calcular Árvore Geradora Mínima': Calcular e exibir a rota mínima\n")
+        controles_text.insert(tk.END, "- Botão 'Resetar': Limpar seleções e rota calculada")
+        
+        controles_text.config(state=tk.DISABLED)
 
 
     def iniciar_jogo(self):
