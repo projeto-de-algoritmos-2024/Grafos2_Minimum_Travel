@@ -28,13 +28,13 @@ O projeto implementa os seguintes conceitos de teoria dos grafos:
 
 ## Screenshots
 
-| Tela de Introdução                         | Tela de Jogo                               |
+| Tela Inicial                         | Tela das informações                                |
 | ------------------------------------------ | ------------------------------------------ |
-| Intro                    | Game                      |
+| ![Inicial](assets/inicial.png)                     | ![Info](assets/info.png)                       |
 
-| Tela de Início do Jogo                     | Tela de Fim de Jogo                        |
+| Tela do mapa                     | Tela do caminho                        |
 | ------------------------------------------ | ------------------------------------------ |
-| Start                    | End                        |
+| ![Mapa](assets/mapa.png)                    | ![Caminho](assets/caminho.png)                       |
 
 ## Instalação 
 
@@ -51,23 +51,25 @@ O projeto implementa os seguintes conceitos de teoria dos grafos:
 
 ### Rodando o projeto
 
-Para executar o projeto, navegue até o diretório do projeto e execute o arquivo principal:
+Para executar o projeto, navegue até o diretório do projeto (Minimum_Travel) e execute o arquivo principal:
 
 ```bash
-python main.py
+python minimum_travel.py
 ```
 
 ## Uso
 
-1. Ao iniciar o programa, você verá um mapa interativo.
-2. Clique em até 5 esquinas no mapa para selecioná-las.
-3. Após selecionar as esquinas, o programa calculará e exibirá a rota mínima entre elas.
-4. Use o botão de reset para limpar as seleções e começar novamente.
+1. Ao iniciar o programa terá uma tela inicial com as opções de informações do projeto, controles e começar.
+2. Se clicar em começar você verá um mapa interativo.
+3. Clique em até 5 esquinas no mapa para selecioná-las.
+4. Após selecionar as esquinas, o programa calculará e exibirá a rota mínima entre elas.
+5. Use o botão de reset para limpar as seleções e começar novamente.
 
 ### Controles
 
 - Clique do mouse: Selecionar esquinas
 - Botão de reset: Limpar seleções e rota
+- Setas indicadoras (< >) (^v) movem o mapa
 
 ## Apresentação
 
