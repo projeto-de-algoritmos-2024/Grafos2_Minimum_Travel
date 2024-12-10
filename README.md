@@ -46,7 +46,7 @@ O projeto implementa os seguintes conceitos de teoria dos grafos:
 1. Python 3.x instalado.
 2. Instale as bibliotecas necessárias usando:
    ```bash
-   pip install tkinter pillow networkx
+   pip install pillow networkx
    ```
 
 ### Rodando o projeto
